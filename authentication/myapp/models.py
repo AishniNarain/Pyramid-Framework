@@ -25,13 +25,13 @@ class User(Base):
     username = Column(String(50), unique=True)
     password = Column(String(50), unique=True)
     
-    def __init__(self,id,username,password):
-        self.id = id,
+    def __init__(self,username,password):
+        # self.id = id,
         self.username = username,
         self.password = password
         
     def to_json(self):
-        to_serialize = ['id', 'username', 'password']
+        to_serialize = [ 'username', 'password']
         d = {}
         for attr_name in to_serialize:
             d[attr_name] = getattr(self, attr_name)

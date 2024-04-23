@@ -3,6 +3,10 @@ from main import session
 from .models import User, Book, Role, user_roles
 from middleware import MyMiddleware
 from pyramid.view import forbidden_view_config
+from .schemas import UserSchema
+from pyramid.response import Response
+import json
+from marshmallow import ValidationError
 
 @forbidden_view_config(renderer='json')
 def forbidden(message,request):
@@ -34,8 +38,15 @@ def home(request):
 
 @view_config(route_name = 'register',request_method= 'POST', renderer= 'json')
 def register_users(request):
-    username = request.json_body.get('username')
-    password = request.json_body.get('password')
+    
+    schema = UserSchema()
+    try:
+        user_data, errors = schema.load(request.json_body)
+    except ValidationError as e:
+        return {'errors': e.messages}
+    
+    username = user_data.get('username')
+    password = user_data.get('password')
     
     existing_user = session.query(User).filter_by(username=username).first()
     existing_password = session.query(User).filter_by(password=password).first()
