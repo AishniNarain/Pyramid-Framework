@@ -1,0 +1,4 @@
+sqlalchemy
+pyramid
+pyramid-sqlalchemy
+pyramid-jwt

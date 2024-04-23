@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+</head>
+<body>
+    <form method="post" action="/myview">
+        <input type="hidden" name="csrf_token" value="{{get_csrf_token()}}">
+        <input type="submit" value="Delete Everything">
+    </form>
+</body>
+</html>
